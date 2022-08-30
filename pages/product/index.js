@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { hasToken } from "../../utility/localStorage";
+import { protectedPage } from "../../utility/protectedPage";
 
 import PageHeader from "../../components/headers/PageHeader";
 import ProductCard from "../../components/cards/ProductCard";
@@ -11,6 +12,10 @@ import Spinner from "../../components/loadings/Spinner";
 export default function index() {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    protectedPage();
+  }, []);
 
   const showProductList = async () => {
     hasToken();
