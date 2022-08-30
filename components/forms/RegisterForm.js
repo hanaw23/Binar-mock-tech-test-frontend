@@ -2,8 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { urlWebApi } from "../../utility/urlApi";
-
 export default function RegisterForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +24,7 @@ export default function RegisterForm() {
     event.preventDefault();
 
     try {
-      const response = await axios.post(`${urlWebApi}auth/signup`, {
+      const response = await axios.post(`/auth/signup`, {
         name: name,
         email: email,
         password: password,
