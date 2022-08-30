@@ -2,9 +2,10 @@ import EditButton from "../buttons/EditButton";
 import DeleteButton from "../buttons/DeleteButton";
 
 export default function ProductCard(props) {
+  // const image = props.image;
   return (
     <div>
-      <div className="h-fit w-fit bg-slate-800 border border-gray-800">
+      <div className="h-fit w-fit border border-gray-800 bg-slate-800">
         <div className="h-[300px] w-[350px] flex justify-end gap-5 pt-4 pr-5">
           <EditButton />
           <DeleteButton name={props.name} id={props.id} />

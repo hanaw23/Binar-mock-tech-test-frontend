@@ -13,7 +13,7 @@ export default function index() {
         {product.map((item, i) => {
           return (
             <div key={i}>
-              <ProductCard name={item.name} price={item.price} id={item.id} />
+              <ProductCard name={item.name} price={item.price} id={item.id} image={item.imageurl} />
             </div>
           );
         })}
