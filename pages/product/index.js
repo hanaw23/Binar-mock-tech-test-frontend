@@ -2,7 +2,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { urlWebApi } from "../../utility/urlApi";
 import { hasToken } from "../../utility/localStorage";
 
 import PageHeader from "../../components/headers/PageHeader";
@@ -14,7 +13,7 @@ export default function index() {
   useEffect(() => {
     hasToken();
     axios
-      .get(`${urlWebApi}v1/products`)
+      .get(`/v1/products`)
       .then((response) => {
         setProductList(response.data.result);
       })
