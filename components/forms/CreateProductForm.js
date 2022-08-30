@@ -1,10 +1,18 @@
+import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import NumberFormat from "react-number-format";
+
+import { hasToken } from "../../utility/localStorage";
+import { urlWebApi } from "../../utility/urlApi";
 
 export default function CreateProductForm(props) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -16,6 +24,30 @@ export default function CreateProductForm(props) {
 
   const handleChangePrice = (event) => {
     setPrice(event.target.value);
+  };
+
+  const submitAddCustomer = async (event) => {
+    event.preventDefault();
+    hasToken();
+
+    const response = await axios.post(`${urlWebApi}v1/products/`, {
+      name: name,
+      price: price.toString(),
+      imageurl: image,
+    });
+
+    try {
+      if (response.data.status === "OK") {
+        router.push("/product");
+        // setSuccess(response.data.message);
+        window.location.reload(true);
+        // dispatch(addCustomer(response.data.result));
+      }
+    } catch (error) {
+      setError(error);
+    }
+
+    // dispatch(axiosAddCustomer(name, price, image, router, setSuccess, setFailed));
   };
   return (
     <div>
@@ -44,7 +76,7 @@ export default function CreateProductForm(props) {
           <button className="border border-transparent bg-white-700 text-sm w-fit text-gray-800 mr-10" onClick={props.onClose}>
             Back
           </button>
-          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit">
+          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit" onClick={submitAddCustomer}>
             Create
           </button>
         </div>

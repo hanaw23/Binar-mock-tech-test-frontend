@@ -1,12 +1,19 @@
+// import axios from "axios";
 import { useState } from "react";
 import NumberFormat from "react-number-format";
+// import { useRouter } from "next/router";
+
+// import { urlWebApi } from "../../utility/urlApi";
+// import { hasToken } from "../../utility/localStorage";
 
 export default function EditProductForm(props) {
   const [name, setName] = useState(props.name);
   const [price, setPrice] = useState(props.price);
   const [image, setImage] = useState(props.image);
+  const [error, setError] = useState("");
 
   const id = props.id;
+  // const router = useRouter();
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -18,6 +25,31 @@ export default function EditProductForm(props) {
 
   const handleChangePrice = (event) => {
     setPrice(event.target.value);
+  };
+
+  const submitEditProduct = async (event) => {
+    event.preventDefault();
+    // dispatch(axiosEditCustomer(id, name, price, image, phone, job, statusCus, router, setError));
+    // hasToken();
+
+    // const response = await axios.put(`${urlWebApi}v1/products/${id}`, {
+    //   name: name,
+    //   price: price,
+    //   imageurl: image,
+    // });
+
+    // console.log(response);
+
+    // try {
+    //   if (response.data.success) {
+    //     router.push("/customerManagement");
+    //     setSuccess(response.data.message);
+    //     window.location.reload(true);
+    //     dispatch(editCustomer(response.data.result));
+    //   }
+    // } catch (error) {
+    //   setFailed(error);
+    // }
   };
   return (
     <div>
@@ -47,7 +79,7 @@ export default function EditProductForm(props) {
           <button className="border border-transparent bg-white-700 text-sm w-fit text-gray-800 mr-10" onClick={props.onClose}>
             Back
           </button>
-          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit">
+          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit" onClick={submitEditProduct}>
             Update
           </button>
         </div>
