@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import NumberFormat from "react-number-format";
 
 import { hasToken } from "../../utility/localStorage";
-import { urlWebApi } from "../../utility/urlApi";
 
 export default function CreateProductForm(props) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
+  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -31,13 +31,14 @@ export default function CreateProductForm(props) {
     hasToken();
 
     try {
-      const response = await axios.post(`${urlWebApi}v1/products/`, {
+      const response = await axios.post(`/v1/products/`, {
         name: name,
         price: price.toString(),
         imageurl: image,
       });
       if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
+        setSuccess("Success Create Product");
         window.location.reload(true);
       } else {
         setError("Terdapat Error!");

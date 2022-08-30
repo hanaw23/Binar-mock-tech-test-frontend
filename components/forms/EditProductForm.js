@@ -39,7 +39,7 @@ export default function EditProductForm(props) {
 
       if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
-        setSuccess(response.data.result.message);
+        setSuccess("Success Edit Product");
         window.location.reload(true);
       } else {
         setError("Terdapat Error!");
