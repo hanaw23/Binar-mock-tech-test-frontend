@@ -1,7 +1,7 @@
 export const product = [
   {
     id: 1,
-    name: "Giant Reign",
+    name: "Giant Reign TDR 2000",
     price: 2560,
     imageurl: "http://www.sepedacycleshop.com/image-product/img2033-1368243649.jpg",
   },

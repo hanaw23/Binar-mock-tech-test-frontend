@@ -1,22 +1,27 @@
 import { useState } from "react";
 
 import DeleteIcon from "../svg/DeleteIcon";
+import DeleteModal from "../modal/DeleteModal";
 
-export default function DeleteButton() {
+export default function DeleteButton(props) {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const handleOpenDeleteModal = () => {
     setOpenDeleteModal(true);
   };
 
-  //   const handleCloseDeleteModal = () => {
-  //     setOpenDeleteModal(!openDeleteModal);
-  //   };
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(!openDeleteModal);
+  };
+
   return (
     <div>
-      <button type="submit" onClick={handleOpenDeleteModal}>
-        <DeleteIcon />
-      </button>
+      <div>
+        <button type="submit" onClick={handleOpenDeleteModal}>
+          <DeleteIcon />
+        </button>
+      </div>
+      {openDeleteModal && <DeleteModal onClose={handleCloseDeleteModal} name={props.name} id={props.id} />}
     </div>
   );
 }
