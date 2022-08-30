@@ -1,4 +1,39 @@
+import axios from "axios";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
+import { setUserLocal } from "../../utility/localStorage";
+
 export default function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleChangePass = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmitLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const reponse = await axios.post(`/auth/login`, {
+        email: email,
+        password: password,
+      });
+      setUserLocal(reponse.data.result.access_token);
+      router.push("/product");
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return (
     <div className="h-full bg-gray-white w-[500px]">
       <div className="h-full ">
@@ -7,8 +42,8 @@ export default function LoginForm() {
             <div>
               <h2 className="mt-6 text-center text-5xl font-thin text-gray-900 ">Login</h2>
             </div>
+            {error && <h3 className="text-center font-semibold text-red-700">{error}</h3>}
             <div className="mt-8 space-y-6 border border-gray-600 rounded  px-10 py-10">
-              {/* {error && <h3 className="text-center font-semibold text-red-700">{error}</h3>} */}
               <div className="rounded-md shadow-sm space-y-5">
                 <div className="relative">
                   <input
@@ -16,8 +51,8 @@ export default function LoginForm() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    // value={email}
-                    // onChange={handleChangeEmail}
+                    value={email}
+                    onChange={handleChangeEmail}
                     required
                     className="block px-2.5 pb-1 pt-4 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-gray-600 peer"
                     placeholder=" "
@@ -36,8 +71,8 @@ export default function LoginForm() {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    // value={password}
-                    // onChange={handleChangePass}
+                    value={password}
+                    onChange={handleChangePass}
                     required
                     className="block px-2.5 pb-1 pt-4 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-gray-600 peer"
                     placeholder=" "
@@ -55,6 +90,7 @@ export default function LoginForm() {
                 <button
                   type="submit"
                   className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-m font-semibold rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  onClick={handleSubmitLogin}
                 >
                   Login
                 </button>

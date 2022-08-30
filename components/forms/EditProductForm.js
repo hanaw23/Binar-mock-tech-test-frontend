@@ -1,12 +1,19 @@
+import axios from "axios";
 import { useState } from "react";
 import NumberFormat from "react-number-format";
+import { useRouter } from "next/router";
+
+import { hasToken } from "../../utility/localStorage";
 
 export default function EditProductForm(props) {
   const [name, setName] = useState(props.name);
   const [price, setPrice] = useState(props.price);
   const [image, setImage] = useState(props.image);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   const id = props.id;
+  const router = useRouter();
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -19,6 +26,29 @@ export default function EditProductForm(props) {
   const handleChangePrice = (event) => {
     setPrice(event.target.value);
   };
+
+  const submitEditProduct = async (event) => {
+    event.preventDefault();
+    hasToken();
+    try {
+      const response = await axios.put(`/v1/products/${id}`, {
+        name: name,
+        price: price,
+        imageurl: image,
+      });
+
+      if (response.data.status === "OK" && response.data.errors === null) {
+        router.push("/product");
+        setSuccess("Success Edit Product");
+        window.location.reload(true);
+      } else {
+        setError("Terdapat Error!");
+      }
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col mx-center mb-10">
@@ -47,7 +77,7 @@ export default function EditProductForm(props) {
           <button className="border border-transparent bg-white-700 text-sm w-fit text-gray-800 mr-10" onClick={props.onClose}>
             Back
           </button>
-          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit">
+          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit" onClick={submitEditProduct}>
             Update
           </button>
         </div>

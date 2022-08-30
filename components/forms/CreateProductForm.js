@@ -1,10 +1,18 @@
+import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import NumberFormat from "react-number-format";
+
+import { hasToken } from "../../utility/localStorage";
 
 export default function CreateProductForm(props) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -16,6 +24,28 @@ export default function CreateProductForm(props) {
 
   const handleChangePrice = (event) => {
     setPrice(event.target.value);
+  };
+
+  const submitCreateCustomer = async (event) => {
+    event.preventDefault();
+    hasToken();
+
+    try {
+      const response = await axios.post(`/v1/products/`, {
+        name: name,
+        price: price.toString(),
+        imageurl: image,
+      });
+      if (response.data.status === "OK" && response.data.errors === null) {
+        router.push("/product");
+        setSuccess("Success Create Product");
+        window.location.reload(true);
+      } else {
+        setError("Terdapat Error!");
+      }
+    } catch (error) {
+      setError(error);
+    }
   };
   return (
     <div>
@@ -44,7 +74,7 @@ export default function CreateProductForm(props) {
           <button className="border border-transparent bg-white-700 text-sm w-fit text-gray-800 mr-10" onClick={props.onClose}>
             Back
           </button>
-          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit">
+          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit" onClick={submitCreateCustomer}>
             Create
           </button>
         </div>
