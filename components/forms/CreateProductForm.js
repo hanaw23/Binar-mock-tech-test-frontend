@@ -39,8 +39,8 @@ export default function CreateProductForm(props) {
         </div>
       </div>
 
-      <div className="flex justify-end">
-        <div>
+      <div className="flex justify-end border border-t-gray-900">
+        <div className="pt-4">
           <button className="border border-transparent bg-white-700 text-sm w-fit text-gray-800 mr-10" onClick={props.onClose}>
             Back
           </button>
