@@ -16,8 +16,8 @@ export default function DeleteModal(props) {
   const router = useRouter();
 
   const submitDeleteProduct = async () => {
+    hasToken();
     try {
-      hasToken();
       const response = await axios.delete(`/v1/products/${id}`);
       if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
