@@ -37,8 +37,6 @@ export default function RegisterForm() {
     try {
       if (response.data.status === "OK") {
         router.push("/login");
-        // window.location.reload(true);
-        // dispatch(addCustomer(response.data.result));
       }
     } catch (error) {
       setError(error);

@@ -17,7 +17,6 @@ export default function index() {
       .get(`${urlWebApi}v1/products`)
       .then((response) => {
         setProductList(response.data.result);
-        // dispatch(getCustomers(response.data.result));
       })
       .catch((error) => error);
   }, []);

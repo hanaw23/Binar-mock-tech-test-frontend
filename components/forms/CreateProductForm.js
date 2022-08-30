@@ -26,7 +26,7 @@ export default function CreateProductForm(props) {
     setPrice(event.target.value);
   };
 
-  const submitAddCustomer = async (event) => {
+  const submitCreateCustomer = async (event) => {
     event.preventDefault();
     hasToken();
 
@@ -37,17 +37,15 @@ export default function CreateProductForm(props) {
     });
 
     try {
-      if (response.data.status === "OK") {
+      if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
-        // setSuccess(response.data.message);
         window.location.reload(true);
-        // dispatch(addCustomer(response.data.result));
+      } else {
+        setError("Terdapat Error!");
       }
     } catch (error) {
       setError(error);
     }
-
-    // dispatch(axiosAddCustomer(name, price, image, router, setSuccess, setFailed));
   };
   return (
     <div>
@@ -76,7 +74,7 @@ export default function CreateProductForm(props) {
           <button className="border border-transparent bg-white-700 text-sm w-fit text-gray-800 mr-10" onClick={props.onClose}>
             Back
           </button>
-          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit" onClick={submitAddCustomer}>
+          <button className="border border-gray-800 bg-gray-300 text-sm w-fit rounded text-gray-800 px-5 py-1 " type="submit" onClick={submitCreateCustomer}>
             Create
           </button>
         </div>

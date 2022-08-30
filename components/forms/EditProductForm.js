@@ -29,7 +29,6 @@ export default function EditProductForm(props) {
 
   const submitEditProduct = async (event) => {
     event.preventDefault();
-    // dispatch(axiosEditCustomer(id, name, price, image, phone, job, statusCus, router, setError));
     // hasToken();
 
     // const response = await axios.put(`${urlWebApi}v1/products/${id}`, {

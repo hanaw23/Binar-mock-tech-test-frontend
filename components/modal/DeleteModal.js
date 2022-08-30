@@ -1,10 +1,36 @@
+import axios from "axios";
+import { useState } from "react";
 import ReactDOM from "react-dom";
+import { useRouter } from "next/router";
+
+import { urlWebApi } from "../../utility/urlApi";
+import { hasToken } from "../../utility/localStorage";
 
 import style from "./Modal.module.css";
 
 export default function DeleteModal(props) {
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
   const id = props.id;
   const name = props.name;
+
+  const router = useRouter();
+
+  const submitDeleteProduct = async () => {
+    hasToken();
+    const response = await axios.delete(`v1/products/${id}`);
+    console.log(response);
+    // try {
+    //   if (response.data.success) {
+    //     router.push("/product");
+    //     setSuccess(response.data.message);
+    //     window.location.reload(true);
+    //     dispatch(deleteCustomer(response.data.result));
+    //   }
+    // } catch (error) {
+    //   setError(error);
+    // }
+  };
   return ReactDOM.createPortal(
     <>
       <div className={`${style.animated} ${style.faster} ${style.fadeIn} main-modal fixed w-full h-100 inset-0 z-50 overflow-auto flex  justify-center items-center`} style={{ background: "rgba(0,0,0,.7)" }}>
@@ -19,7 +45,7 @@ export default function DeleteModal(props) {
                 <button className="border border-gray-700 bg-white-700 text-sm w-fit px-10 h-8 rounded text-gray-400 text-semibold" onClick={props.onClose}>
                   No
                 </button>
-                <button className="border border-transparent bg-gray-700 text-sm w-fit h-8 px-4 rounded text-white text-semibold" type="submit">
+                <button className="border border-transparent bg-gray-700 text-sm w-fit h-8 px-4 rounded text-white text-semibold" type="submit" onClick={submitDeleteProduct}>
                   Yes, delete it
                 </button>
               </div>
@@ -27,8 +53,6 @@ export default function DeleteModal(props) {
           </div>
         </div>
       </div>
-      {/* {success.length !== 0 && <SuccessModal message={success} />}
-      {failed.length !== 0 && <FailedModal message={failed} />} */}
     </>,
     document.body
   );

@@ -22,7 +22,6 @@ export default function LoginForm() {
 
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
-    // dispatch(axiosLogin(email, password, router, setError));
     const reponse = await axios.post(`${urlWebApi}auth/login`, {
       email: email,
       password: password,
@@ -30,7 +29,6 @@ export default function LoginForm() {
 
     try {
       setUserLocal(reponse.data.result.access_token);
-      // dispatch(login(result.data.access_token));
       router.push("/product");
     } catch (error) {
       setError(error);
