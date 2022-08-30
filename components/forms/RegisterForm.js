@@ -1,4 +1,50 @@
+import axios from "axios";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
+import { urlWebApi } from "../../utility/urlApi";
+
 export default function RegisterForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  const handleChangeName = (event) => {
+    setName(event.target.value);
+  };
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmitRegister = async (event) => {
+    event.preventDefault();
+    // dispatch(axiosAddCustomer(name, email, password, router));
+
+    const response = await axios.post(`${urlWebApi}auth/signup`, {
+      name: name,
+      email: email,
+      password: password,
+    });
+
+    console.log(response);
+
+    try {
+      if (response.data.status === "OK") {
+        router.push("/login");
+        // window.location.reload(true);
+        // dispatch(addCustomer(response.data.result));
+      }
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return (
     <div className="h-full bg-gray-white w-[500px]">
       <div className="h-full ">
@@ -7,8 +53,8 @@ export default function RegisterForm() {
             <div>
               <h2 className="mt-6 text-center text-5xl font-thin text-gray-900 ">Register</h2>
             </div>
+            {error && <h3 className="text-center font-semibold text-red-700">{error}</h3>}
             <div className="mt-8 space-y-6 border border-gray-600 rounded  px-10 py-10">
-              {/* {error && <h3 className="text-center font-semibold text-red-700">{error}</h3>} */}
               <div className="rounded-md shadow-sm space-y-5">
                 <div className="relative">
                   <input
@@ -16,8 +62,8 @@ export default function RegisterForm() {
                     name="name"
                     type="name"
                     autoComplete="name"
-                    // value={name}
-                    // onChange={handleChangeName}
+                    value={name}
+                    onChange={handleChangeName}
                     required
                     className="block px-2.5 pb-1 pt-4 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-gray-600 peer"
                     placeholder=" "
@@ -36,8 +82,8 @@ export default function RegisterForm() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    // value={email}
-                    // onChange={handleChangeEmail}
+                    value={email}
+                    onChange={handleChangeEmail}
                     required
                     className="block px-2.5 pb-1 pt-4 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-gray-600 peer"
                     placeholder=" "
@@ -56,8 +102,8 @@ export default function RegisterForm() {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    // value={password}
-                    // onChange={handleChangePass}
+                    value={password}
+                    onChange={handleChangePassword}
                     required
                     className="block px-2.5 pb-1 pt-4 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-gray-600 peer"
                     placeholder=" "
@@ -75,6 +121,7 @@ export default function RegisterForm() {
                 <button
                   type="submit"
                   className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-m font-semibold rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  onClick={handleSubmitRegister}
                 >
                   Register
                 </button>

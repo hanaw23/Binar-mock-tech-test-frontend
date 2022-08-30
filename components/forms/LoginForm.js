@@ -28,8 +28,6 @@ export default function LoginForm() {
       password: password,
     });
 
-    // console.log(reponse.data.result.access_token);
-
     try {
       setUserLocal(reponse.data.result.access_token);
       // dispatch(login(result.data.access_token));
