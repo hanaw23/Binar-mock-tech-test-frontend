@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { hasToken } from "../../utility/localStorage";
 
 import style from "./Modal.module.css";
+import ErrorModal from "./ErrorModal";
+import SuccessModal from "./SuccessModal";
 
 export default function DeleteModal(props) {
   const [success, setSuccess] = useState("");
@@ -52,6 +54,8 @@ export default function DeleteModal(props) {
           </div>
         </div>
       </div>
+      {success.length !== 0 && <SuccessModal message={success} />}
+      {error.length !== 0 && <ErrorModal message={error} />}
     </>,
     document.body
   );
