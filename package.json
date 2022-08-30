@@ -2,7 +2,6 @@
   "name": "binar-mock-test-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://test-binar.herokuapp.com/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -18,7 +17,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-number-format": "^4.9.3",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "proxy": "https://test-binar.herokuapp.com/"
   },
   "devDependencies": {
     "eslint": "8.23.0",

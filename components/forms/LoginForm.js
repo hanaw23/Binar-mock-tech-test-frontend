@@ -22,12 +22,12 @@ export default function LoginForm() {
 
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
-    const reponse = await axios.post(`${urlWebApi}auth/login`, {
-      email: email,
-      password: password,
-    });
 
     try {
+      const reponse = await axios.post(`${urlWebApi}auth/login`, {
+        email: email,
+        password: password,
+      });
       setUserLocal(reponse.data.result.access_token);
       router.push("/product");
     } catch (error) {

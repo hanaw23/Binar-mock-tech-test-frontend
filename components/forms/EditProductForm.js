@@ -31,15 +31,14 @@ export default function EditProductForm(props) {
     event.preventDefault();
     // hasToken();
 
+    // console.log(response);
+
+    // try {
     // const response = await axios.put(`${urlWebApi}v1/products/${id}`, {
     //   name: name,
     //   price: price,
     //   imageurl: image,
     // });
-
-    // console.log(response);
-
-    // try {
     //   if (response.data.success) {
     //     router.push("/customerManagement");
     //     setSuccess(response.data.message);

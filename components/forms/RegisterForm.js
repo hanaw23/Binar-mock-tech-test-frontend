@@ -24,17 +24,13 @@ export default function RegisterForm() {
 
   const handleSubmitRegister = async (event) => {
     event.preventDefault();
-    // dispatch(axiosAddCustomer(name, email, password, router));
-
-    const response = await axios.post(`${urlWebApi}auth/signup`, {
-      name: name,
-      email: email,
-      password: password,
-    });
-
-    console.log(response);
 
     try {
+      const response = await axios.post(`${urlWebApi}auth/signup`, {
+        name: name,
+        email: email,
+        password: password,
+      });
       if (response.data.status === "OK") {
         router.push("/login");
       }

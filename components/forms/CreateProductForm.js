@@ -30,13 +30,12 @@ export default function CreateProductForm(props) {
     event.preventDefault();
     hasToken();
 
-    const response = await axios.post(`${urlWebApi}v1/products/`, {
-      name: name,
-      price: price.toString(),
-      imageurl: image,
-    });
-
     try {
+      const response = await axios.post(`${urlWebApi}v1/products/`, {
+        name: name,
+        price: price.toString(),
+        imageurl: image,
+      });
       if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
         window.location.reload(true);

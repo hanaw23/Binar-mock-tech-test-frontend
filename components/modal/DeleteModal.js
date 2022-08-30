@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { useRouter } from "next/router";
 
 import { urlWebApi } from "../../utility/urlApi";
-import { hasToken } from "../../utility/localStorage";
+import { getToken } from "../../utility/localStorage";
 
 import style from "./Modal.module.css";
 
@@ -17,19 +17,22 @@ export default function DeleteModal(props) {
   const router = useRouter();
 
   const submitDeleteProduct = async () => {
-    hasToken();
-    const response = await axios.delete(`v1/products/${id}`);
-    console.log(response);
-    // try {
-    //   if (response.data.success) {
-    //     router.push("/product");
-    //     setSuccess(response.data.message);
-    //     window.location.reload(true);
-    //     dispatch(deleteCustomer(response.data.result));
-    //   }
-    // } catch (error) {
-    //   setError(error);
-    // }
+    try {
+      const response = await axios.delete(`v1/products/${id}`, {
+        headers: {
+          Authorization: getToken(),
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      if (response.data.status === "OK") {
+        router.push("/product");
+        setSuccess(response.data.message);
+        window.location.reload(true);
+      }
+    } catch (error) {
+      error;
+    }
   };
   return ReactDOM.createPortal(
     <>
