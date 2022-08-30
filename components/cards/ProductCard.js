@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
+
 import EditButton from "../buttons/EditButton";
 import DeleteButton from "../buttons/DeleteButton";
 
