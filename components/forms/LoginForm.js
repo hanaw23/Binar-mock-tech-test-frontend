@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { urlWebApi } from "../../utility/urlApi";
 import { setUserLocal } from "../../utility/localStorage";
 
 export default function LoginForm() {
@@ -24,7 +23,7 @@ export default function LoginForm() {
     event.preventDefault();
 
     try {
-      const reponse = await axios.post(`${urlWebApi}auth/login`, {
+      const reponse = await axios.post(`/auth/login`, {
         email: email,
         password: password,
       });
