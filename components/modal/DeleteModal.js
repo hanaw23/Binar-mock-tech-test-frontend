@@ -19,13 +19,15 @@ export default function DeleteModal(props) {
     try {
       hasToken();
       const response = await axios.delete(`/v1/products/${id}`);
-      if (response.data.status === "OK") {
+      if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
-        setSuccess(response.data.message);
+        setSuccess(response.data.result.message);
         window.location.reload(true);
+      } else {
+        setError("Terdapat Error!");
       }
     } catch (error) {
-      error;
+      setError(error);
     }
   };
   return ReactDOM.createPortal(
