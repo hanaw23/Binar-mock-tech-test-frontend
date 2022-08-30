@@ -10,6 +10,7 @@ import ErrorModal from "./ErrorModal";
 import SuccessModal from "./SuccessModal";
 
 export default function DeleteModal(props) {
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const id = props.id;
@@ -21,6 +22,8 @@ export default function DeleteModal(props) {
     hasToken();
     try {
       const response = await axios.delete(`/v1/products/${id}`);
+      setLoading(true);
+
       if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
         setSuccess(response.data.result.message);
@@ -54,8 +57,8 @@ export default function DeleteModal(props) {
           </div>
         </div>
       </div>
-      {success.length !== 0 && <SuccessModal message={success} />}
-      {error.length !== 0 && <ErrorModal message={error} />}
+      {success.length !== 0 && loading && <SuccessModal message={success} />}
+      {/* {error.length !== 0 && <ErrorModal message={error} />} */}
     </>,
     document.body
   );

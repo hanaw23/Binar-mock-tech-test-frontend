@@ -5,10 +5,13 @@ import { useRouter } from "next/router";
 
 import { hasToken } from "../../utility/localStorage";
 
+import SuccessModal from "../modal/SuccessModal";
+
 export default function EditProductForm(props) {
   const [name, setName] = useState(props.name);
   const [price, setPrice] = useState(props.price);
   const [image, setImage] = useState(props.image);
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
@@ -36,6 +39,7 @@ export default function EditProductForm(props) {
         price: price,
         imageurl: image,
       });
+      setLoading(true);
 
       if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
@@ -82,6 +86,7 @@ export default function EditProductForm(props) {
           </button>
         </div>
       </div>
+      {success.length !== 0 && loading && <SuccessModal message={success} />}
     </div>
   );
 }
