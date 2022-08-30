@@ -3,8 +3,7 @@ import { useState } from "react";
 import ReactDOM from "react-dom";
 import { useRouter } from "next/router";
 
-import { urlWebApi } from "../../utility/urlApi";
-import { getToken } from "../../utility/localStorage";
+import { hasToken } from "../../utility/localStorage";
 
 import style from "./Modal.module.css";
 
@@ -18,13 +17,8 @@ export default function DeleteModal(props) {
 
   const submitDeleteProduct = async () => {
     try {
-      const response = await axios.delete(`/v1/products/${id}`, {
-        headers: {
-          Authorization: getToken(),
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
+      hasToken();
+      const response = await axios.delete(`/v1/products/${id}`);
       if (response.data.status === "OK") {
         router.push("/product");
         setSuccess(response.data.message);
