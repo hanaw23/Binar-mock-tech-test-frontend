@@ -5,10 +5,13 @@ import NumberFormat from "react-number-format";
 
 import { hasToken } from "../../utility/localStorage";
 
+import SuccessModal from "../modal/SuccessModal";
+
 export default function CreateProductForm(props) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
@@ -36,6 +39,8 @@ export default function CreateProductForm(props) {
         price: price.toString(),
         imageurl: image,
       });
+      setLoading(true);
+
       if (response.data.status === "OK" && response.data.errors === null) {
         router.push("/product");
         setSuccess("Success Create Product");
@@ -79,6 +84,7 @@ export default function CreateProductForm(props) {
           </button>
         </div>
       </div>
+      {success.length !== 0 && loading && <SuccessModal message={success} />}
     </div>
   );
 }
