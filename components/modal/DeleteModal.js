@@ -18,7 +18,7 @@ export default function DeleteModal(props) {
 
   const submitDeleteProduct = async () => {
     try {
-      const response = await axios.delete(`v1/products/${id}`, {
+      const response = await axios.delete(`/v1/products/${id}`, {
         headers: {
           Authorization: getToken(),
           "Content-Type": "application/json",
