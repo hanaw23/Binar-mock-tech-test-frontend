@@ -11,9 +11,10 @@ export default function PageHeader(props) {
     removeToken();
     router.replace("/login");
   };
+
   return (
-    <div>
-      <div className="flex justify-between mx-20">
+    <div className="w-screen">
+      <div className="flex justify-between mx-10 desktop:mx-20">
         <div className="flex gap-8">
           <div className="text-4xl font-semibold">{props.title}</div>
           <div className="mt-1">

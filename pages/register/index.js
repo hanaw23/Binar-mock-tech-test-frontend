@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import RegisterForm from "../../components/forms/RegisterForm";
 
 export default function index() {

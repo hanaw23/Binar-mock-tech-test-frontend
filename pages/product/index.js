@@ -25,12 +25,12 @@ export default function index() {
   }, []);
 
   return (
-    <div>
-      <div className="border border-b-gray-800 py-8">
+    <div className="w-screen">
+      <div className="border border-b-gray-800 py-8 w-screen">
         <PageHeader title="Product List" titleButton="Create New" />
       </div>
       {loading ? (
-        <div className="mt-10 grid grid-cols-3 w-[1300px] h-[950px] mx-10 ml-[150px] gap-y-10">
+        <div className="mt-10 grid grid-cols-3 w-fit h-fit  ml-8 mx-10 desktop:ml-[150px] gap-y-10 px-4 py-4">
           {productList.map((item, i) => {
             return (
               <div key={i}>
