@@ -18,7 +18,7 @@ export const fetchGetProducts = (setProductList, setLoading) => async (dispatch)
   }
 };
 
-export const fetchPostProducts = (name, price, image, setLoading, setSuccess, setError) => async (dispatch) => {
+export const fetchPostProducts = (name, price, image, setLoading, setSuccess, setError, setEmpty) => async (dispatch) => {
   hasToken();
   try {
     const response = await axios.post(`/v1/products/`, {
@@ -35,8 +35,7 @@ export const fetchPostProducts = (name, price, image, setLoading, setSuccess, se
       dispatch(postProducts(response.data.result));
     } else {
       Router.push("/product");
-      setError("Terdapat Error!");
-      window.location.reload(true);
+      setEmpty(response.data.errors);
     }
   } catch (error) {
     setError(error);

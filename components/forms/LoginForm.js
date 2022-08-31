@@ -6,7 +6,7 @@ import { fetchLogin } from "../../store/action/login";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -16,6 +16,14 @@ export default function LoginForm() {
 
   const handleChangePass = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleError = () => {
+    if (error.length !== 0) {
+      if (error.user_authentication) {
+        return <div className="text-xl text-semibold text-center text-rose-700">{error.user_authentication[0]}</div>;
+      }
+    }
   };
 
   const handleSubmitLogin = (event) => {
@@ -31,7 +39,9 @@ export default function LoginForm() {
             <div>
               <h2 className="mt-6 text-center text-5xl font-thin text-gray-900 ">Login</h2>
             </div>
-            {error && <h3 className="text-center font-semibold text-red-700">{error}</h3>}
+
+            {handleError()}
+
             <div className="mt-8 space-y-6 border border-gray-600 rounded  px-10 py-10">
               <div className="rounded-md shadow-sm space-y-5">
                 <div className="relative">
