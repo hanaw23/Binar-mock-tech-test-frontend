@@ -10,13 +10,14 @@ export const fetchPostRegister = (name, email, password, setError) => async (dis
       email: email,
       password: password,
     });
+    console.log(response.data);
     if (response.data.status === "OK" && response.data.errors === null) {
       Router.push("/login");
       dispatch(postRegister(response.data.result));
     } else {
       Router.push("/register");
-      setError("Terdapat Error!");
-      window.location.reload(true);
+      setError("Terdapat Error");
+      // window.location.reload(true);
     }
   } catch (error) {
     setError(error);

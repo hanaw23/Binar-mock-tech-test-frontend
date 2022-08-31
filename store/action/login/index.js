@@ -7,13 +7,18 @@ import { setUserLocal } from "../../../utility/localStorage";
 
 export const fetchLogin = (email, password, setError) => async (dispatch) => {
   try {
-    const reponse = await axios.post(`/auth/login`, {
+    const response = await axios.post(`/auth/login`, {
       email: email,
       password: password,
     });
-    setUserLocal(reponse.data.result.access_token);
-    dispatch(postLogin(reponse.data.result));
-    Router.push("/product");
+    if (response.data.status === "OK" && response.data.errors === null) {
+      setUserLocal(response.data.result.access_token);
+      dispatch(postLogin(response.data.result));
+      Router.push("/product");
+    } else {
+      Router.push("/login");
+      setError("Terdapat Error");
+    }
   } catch (error) {
     setError(error);
   }

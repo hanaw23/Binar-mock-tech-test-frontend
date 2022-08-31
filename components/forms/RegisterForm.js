@@ -7,7 +7,7 @@ export default function RegisterForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -20,6 +20,18 @@ export default function RegisterForm() {
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
   };
+
+  // const handleError = () => {
+  //   if (error.length !== 0) {
+  //     error.map((item) => {
+  //       item.map((x,i) => {
+  //         return (
+  //           <div >{x.name}</div>
+  //         )
+  //       })
+  //     });
+  //   }
+  // };
 
   const handleSubmitRegister = (event) => {
     event.preventDefault();
@@ -34,7 +46,7 @@ export default function RegisterForm() {
             <div>
               <h2 className="mt-6 text-center text-5xl font-thin text-gray-900 ">Register</h2>
             </div>
-            {error && <h3 className="text-center font-semibold text-red-700">{error}</h3>}
+            {error.length !== 0 && <p className="text-xl text-rose-700 font-semibold text-center">{error}</p>}
             <div className="mt-8 space-y-6 border border-gray-600 rounded  px-10 py-10">
               <div className="rounded-md shadow-sm space-y-5">
                 <div className="relative">
