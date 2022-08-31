@@ -11,13 +11,14 @@ export const fetchLogin = (email, password, setError) => async (dispatch) => {
       email: email,
       password: password,
     });
+
     if (response.data.status === "OK" && response.data.errors === null) {
       setUserLocal(response.data.result.access_token);
       dispatch(postLogin(response.data.result));
       Router.push("/product");
     } else {
       Router.push("/login");
-      setError("Terdapat Error");
+      setError(response.data.errors);
     }
   } catch (error) {
     setError(error);

@@ -21,17 +21,17 @@ export default function RegisterForm() {
     setPassword(event.target.value);
   };
 
-  // const handleError = () => {
-  //   if (error.length !== 0) {
-  //     error.map((item) => {
-  //       item.map((x,i) => {
-  //         return (
-  //           <div >{x.name}</div>
-  //         )
-  //       })
-  //     });
-  //   }
-  // };
+  const handleError = (key) => {
+    if (error.length !== 0) {
+      if (error.name && key === "name") {
+        return <div className="text-xs text-rose-700 font-thin mt-2">{error.name[0]}</div>;
+      } else if (error.email && key === "email") {
+        return <div className="text-xs text-rose-700 font-thin mt-2">{error.email[0]}</div>;
+      } else if (error.password && key === "password") {
+        return <div className="text-xs text-rose-700 font-thin mt-2">{error.password[0]}</div>;
+      }
+    }
+  };
 
   const handleSubmitRegister = (event) => {
     event.preventDefault();
@@ -46,7 +46,7 @@ export default function RegisterForm() {
             <div>
               <h2 className="mt-6 text-center text-5xl font-thin text-gray-900 ">Register</h2>
             </div>
-            {error.length !== 0 && <p className="text-xl text-rose-700 font-semibold text-center">{error}</p>}
+
             <div className="mt-8 space-y-6 border border-gray-600 rounded  px-10 py-10">
               <div className="rounded-md shadow-sm space-y-5">
                 <div className="relative">
@@ -67,6 +67,7 @@ export default function RegisterForm() {
                   >
                     Name
                   </label>
+                  {handleError("name")}
                 </div>
 
                 <div className="relative">
@@ -87,6 +88,7 @@ export default function RegisterForm() {
                   >
                     Email
                   </label>
+                  {handleError("email")}
                 </div>
 
                 <div className="relative">
@@ -107,6 +109,7 @@ export default function RegisterForm() {
                   >
                     Password
                   </label>
+                  {handleError("password")}
                 </div>
               </div>
 
