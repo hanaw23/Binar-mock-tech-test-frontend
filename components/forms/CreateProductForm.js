@@ -1,11 +1,11 @@
-import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 import NumberFormat from "react-number-format";
 
-import { hasToken } from "../../utility/localStorage";
+import { fetchPostProducts } from "../../store/action/products";
 
 import SuccessModal from "../modal/SuccessModal";
+import ErrorModal from "../modal/ErrorModal";
 
 export default function CreateProductForm(props) {
   const [name, setName] = useState("");
@@ -15,7 +15,7 @@ export default function CreateProductForm(props) {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -29,28 +29,9 @@ export default function CreateProductForm(props) {
     setPrice(event.target.value);
   };
 
-  const submitCreateCustomer = async (event) => {
+  const submitCreateCustomer = (event) => {
     event.preventDefault();
-    hasToken();
-
-    try {
-      const response = await axios.post(`/v1/products/`, {
-        name: name,
-        price: price.toString(),
-        imageurl: image,
-      });
-      setLoading(true);
-
-      if (response.data.status === "OK" && response.data.errors === null) {
-        router.push("/product");
-        setSuccess("Success Create Product");
-        window.location.reload(true);
-      } else {
-        setError("Terdapat Error!");
-      }
-    } catch (error) {
-      setError(error);
-    }
+    dispatch(fetchPostProducts(name, price, image, setLoading, setSuccess, setError));
   };
   return (
     <div>
@@ -85,6 +66,7 @@ export default function CreateProductForm(props) {
         </div>
       </div>
       {success.length !== 0 && loading && <SuccessModal message={success} />}
+      {error.length !== 0 && loading && <ErrorModal message={error} />}
     </div>
   );
 }

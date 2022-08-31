@@ -1,5 +1,6 @@
 import Head from "next/head";
 
+import { wrapper } from "../store/index";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -13,4 +14,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

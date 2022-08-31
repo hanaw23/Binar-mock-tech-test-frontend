@@ -1,9 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
 import ReactDOM from "react-dom";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
-import { hasToken } from "../../utility/localStorage";
+import { fetchDeleteProducts } from "../../store/action/products";
 
 import style from "./Modal.module.css";
 import ErrorModal from "./ErrorModal";
@@ -16,24 +15,10 @@ export default function DeleteModal(props) {
   const id = props.id;
   const name = props.name;
 
-  const router = useRouter();
+  const dispatch = useDispatch();
 
-  const submitDeleteProduct = async () => {
-    hasToken();
-    try {
-      const response = await axios.delete(`/v1/products/${id}`);
-      setLoading(true);
-
-      if (response.data.status === "OK" && response.data.errors === null) {
-        router.push("/product");
-        setSuccess(response.data.result.message);
-        window.location.reload(true);
-      } else {
-        setError("Terdapat Error!");
-      }
-    } catch (error) {
-      setError(error);
-    }
+  const submitDeleteProduct = () => {
+    dispatch(fetchDeleteProducts(id, setLoading, setSuccess, setError));
   };
   return ReactDOM.createPortal(
     <>
@@ -58,7 +43,7 @@ export default function DeleteModal(props) {
         </div>
       </div>
       {success.length !== 0 && loading && <SuccessModal message={success} />}
-      {/* {error.length !== 0 && <ErrorModal message={error} />} */}
+      {error.length !== 0 && loading && <ErrorModal message={error} />}
     </>,
     document.body
   );

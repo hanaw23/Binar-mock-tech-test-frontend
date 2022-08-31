@@ -1,6 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
+import { fetchPostRegister } from "../../store/action/register";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -8,7 +9,7 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleChangeName = (event) => {
     setName(event.target.value);
@@ -20,21 +21,9 @@ export default function RegisterForm() {
     setPassword(event.target.value);
   };
 
-  const handleSubmitRegister = async (event) => {
+  const handleSubmitRegister = (event) => {
     event.preventDefault();
-
-    try {
-      const response = await axios.post(`/auth/signup`, {
-        name: name,
-        email: email,
-        password: password,
-      });
-      if (response.data.status === "OK") {
-        router.push("/login");
-      }
-    } catch (error) {
-      setError(error);
-    }
+    dispatch(fetchPostRegister(name, email, password, setError));
   };
 
   return (
