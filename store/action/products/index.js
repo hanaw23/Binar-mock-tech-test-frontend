@@ -39,10 +39,11 @@ export const fetchPostProducts = (name, price, image, setLoading, setSuccess, se
     }
   } catch (error) {
     setError(error);
+    window.location.reload(true);
   }
 };
 
-export const fetchPutProducts = (id, name, price, image, setLoading, setSuccess, setError) => async (dispatch) => {
+export const fetchPutProducts = (id, name, price, image, setLoading, setSuccess, setError, setEmptyName, setEmptyImage, setEmptyPrice) => async (dispatch) => {
   hasToken();
   try {
     const response = await axios.put(`/v1/products/${id}`, {
@@ -50,20 +51,43 @@ export const fetchPutProducts = (id, name, price, image, setLoading, setSuccess,
       price: price,
       imageurl: image,
     });
+
     setLoading(true);
 
-    if (response.data.status === "OK" && response.data.errors === null) {
+    if (response.data.status === "OK" && response.data.errors === null && response.data.result.name !== "" && response.data.result.imageurl !== "" && response.data.result.price !== null) {
       Router.push("/product");
       setSuccess("Success Update Product");
       window.location.reload(true);
       dispatch(putProducts(response.data.result));
-    } else {
-      Router.push("/product");
-      setError("Terdapat Error!");
-      window.location.reload(true);
+    } else if (response.data.errors === null && response.data.result.name === "" && response.data.result.imageurl === "" && response.data.result.price === null) {
+      setEmptyName("Name can't be blank !");
+      setEmptyImage("Image URL can't be blank !");
+      setEmptyPrice("Price can't be blank !");
+    } else if (response.data.errors === null && response.data.result.name !== "") {
+      setEmptyName("");
+      if (response.data.result.imageurl === "") {
+        setEmptyImage("Image URL can't be blank !");
+      } else {
+        setEmptyPrice("Price can't be blank !");
+      }
+    } else if (response.data.errors === null && response.data.result.price !== null) {
+      setEmptyPrice("");
+      if (response.data.result.imageurl === "") {
+        setEmptyImage("Image URL can't be blank !");
+      } else {
+        setEmptyName("Name can't be blank !");
+      }
+    } else if (response.data.errors === null && response.data.result.imageurl !== "") {
+      setEmptyImage("");
+      if (response.data.result.name === "") {
+        setEmptyName("Name can't be blank !");
+      } else {
+        setEmptyPrice("Price can't be blank !");
+      }
     }
   } catch (error) {
     setError(error);
+    window.location.reload(true);
   }
 };
 
@@ -85,5 +109,6 @@ export const fetchDeleteProducts = (id, setLoading, setSuccess, setError) => asy
     }
   } catch (error) {
     setError(error);
+    window.location.reload(true);
   }
 };
