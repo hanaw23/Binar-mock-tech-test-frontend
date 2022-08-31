@@ -29,7 +29,9 @@ export default function DeleteModal(props) {
         setSuccess(response.data.result.message);
         window.location.reload(true);
       } else {
+        router.push("/product");
         setError("Terdapat Error!");
+        window.location.reload(true);
       }
     } catch (error) {
       setError(error);
@@ -58,7 +60,7 @@ export default function DeleteModal(props) {
         </div>
       </div>
       {success.length !== 0 && loading && <SuccessModal message={success} />}
-      {/* {error.length !== 0 && <ErrorModal message={error} />} */}
+      {error.length !== 0 && loading && <ErrorModal message={error} />}
     </>,
     document.body
   );

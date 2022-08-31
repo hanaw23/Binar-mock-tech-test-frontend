@@ -6,6 +6,7 @@ import NumberFormat from "react-number-format";
 import { hasToken } from "../../utility/localStorage";
 
 import SuccessModal from "../modal/SuccessModal";
+import ErrorModal from "../modal/ErrorModal";
 
 export default function CreateProductForm(props) {
   const [name, setName] = useState("");
@@ -46,7 +47,9 @@ export default function CreateProductForm(props) {
         setSuccess("Success Create Product");
         window.location.reload(true);
       } else {
+        router.push("/product");
         setError("Terdapat Error!");
+        window.location.reload(true);
       }
     } catch (error) {
       setError(error);
@@ -85,6 +88,7 @@ export default function CreateProductForm(props) {
         </div>
       </div>
       {success.length !== 0 && loading && <SuccessModal message={success} />}
+      {error.length !== 0 && loading && <ErrorModal message={error} />}
     </div>
   );
 }

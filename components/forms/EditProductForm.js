@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { hasToken } from "../../utility/localStorage";
 
 import SuccessModal from "../modal/SuccessModal";
+import ErrorModal from "../modal/ErrorModal";
 
 export default function EditProductForm(props) {
   const [name, setName] = useState(props.name);
@@ -46,7 +47,9 @@ export default function EditProductForm(props) {
         setSuccess("Success Update Product");
         window.location.reload(true);
       } else {
+        router.push("/product");
         setError("Terdapat Error!");
+        window.location.reload(true);
       }
     } catch (error) {
       setError(error);
@@ -87,6 +90,7 @@ export default function EditProductForm(props) {
         </div>
       </div>
       {success.length !== 0 && loading && <SuccessModal message={success} />}
+      {error.length !== 0 && loading && <ErrorModal message={error} />}
     </div>
   );
 }
