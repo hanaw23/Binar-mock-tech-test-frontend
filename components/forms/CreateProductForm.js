@@ -29,7 +29,7 @@ export default function CreateProductForm(props) {
     setPrice(event.target.value);
   };
 
-  const submitCreateCustomer = async (event) => {
+  const submitCreateCustomer = (event) => {
     event.preventDefault();
     dispatch(fetchPostProducts(name, price, image, setLoading, setSuccess, setError));
   };

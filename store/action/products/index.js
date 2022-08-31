@@ -67,3 +67,24 @@ export const fetchPutProducts = (id, name, price, image, setLoading, setSuccess,
     setError(error);
   }
 };
+
+export const fetchDeleteProducts = (id, setLoading, setSuccess, setError) => async (dispatch) => {
+  hasToken();
+  try {
+    const response = await axios.delete(`/v1/products/${id}`);
+    setLoading(true);
+
+    if (response.data.status === "OK" && response.data.errors === null) {
+      Router.push("/product");
+      setSuccess(response.data.result.message);
+      window.location.reload(true);
+      dispatch(deleteProducts(response.data.result));
+    } else {
+      Router.push("/product");
+      setError("Terdapat Error!");
+      window.location.reload(true);
+    }
+  } catch (error) {
+    setError(error);
+  }
+};
