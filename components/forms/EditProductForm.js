@@ -14,6 +14,9 @@ export default function EditProductForm(props) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [emptyName, setEmptyName] = useState("");
+  const [emptyPrice, setEmptyPrice] = useState("");
+  const [emptyImage, setEmptyImage] = useState("");
 
   const id = props.id;
   const dispatch = useDispatch();
@@ -32,7 +35,7 @@ export default function EditProductForm(props) {
 
   const submitEditProduct = (event) => {
     event.preventDefault();
-    dispatch(fetchPutProducts(id, name, price, image, setLoading, setSuccess, setError));
+    dispatch(fetchPutProducts(id, name, price, image, setLoading, setSuccess, setError, setEmptyName, setEmptyImage, setEmptyPrice));
   };
 
   return (
@@ -40,6 +43,7 @@ export default function EditProductForm(props) {
       <div className="flex flex-col mx-center mb-10">
         <div className="mt-4 ">
           <input id="name" className="px-3 border text-gray-800 border-gray-600 w-[320px] h-10 mt-2 focus:outline-blue-500 placeholder:text-sm" placeholder="Product Name" value={name} onChange={handleChangeName} />
+          {emptyName !== "" && <div className="text-xs text-rose-700 font-thin mt-2 text-left">{emptyName}</div>}
         </div>
 
         <div className="mt-4 ">
@@ -51,10 +55,12 @@ export default function EditProductForm(props) {
             onChange={handleChangePrice}
             allowEmptyFormatting={true}
           />
+          {emptyPrice !== "" && <div className="text-xs text-rose-700 font-thin mt-2 text-left">{emptyPrice}</div>}
         </div>
 
         <div className="mt-4 ">
           <input id="image" className="px-3 border text-gray-700 border-gray-600 w-[320px] h-10 mt-2 focus:outline-blue-500 placeholder:text-sm" placeholder="Image Url" value={image} onChange={handleChangeImage} />
+          {emptyImage !== "" && <div className="text-xs text-rose-700 font-thin mt-2 text-left">{emptyImage}</div>}
         </div>
       </div>
 
