@@ -65,24 +65,39 @@ export const fetchPutProducts = (id, name, price, image, setLoading, setSuccess,
       setEmptyPrice("Price can't be blank !");
     } else if (response.data.errors === null && response.data.result.name !== "") {
       setEmptyName("");
-      if (response.data.result.imageurl === "") {
+      if (response.data.result.imageurl === "" && response.data.result.price === null) {
         setEmptyImage("Image URL can't be blank !");
-      } else {
         setEmptyPrice("Price can't be blank !");
+      } else if (response.data.result.imageurl !== "" && response.data.result.price === null) {
+        setEmptyImage("");
+        setEmptyPrice("Price can't be blank !");
+      } else if (response.data.result.imageurl === "" && response.data.result.price !== null) {
+        setEmptyImage("Image URL can't be blank !");
+        setEmptyPrice("");
       }
     } else if (response.data.errors === null && response.data.result.price !== null) {
       setEmptyPrice("");
-      if (response.data.result.imageurl === "") {
+      if (response.data.result.imageurl === "" && response.data.result.name === "") {
         setEmptyImage("Image URL can't be blank !");
-      } else {
         setEmptyName("Name can't be blank !");
+      } else if (response.data.result.imageurl !== "" && response.data.result.name === "") {
+        setEmptyImage("");
+        setEmptyName("Name can't be blank !");
+      } else if (response.data.result.imageurl === "" && response.data.result.name !== "") {
+        setEmptyImage("Image URL can't be blank !");
+        setEmptyName("");
       }
     } else if (response.data.errors === null && response.data.result.imageurl !== "") {
       setEmptyImage("");
-      if (response.data.result.name === "") {
+      if (response.data.result.name === "" && response.data.result.price === null) {
         setEmptyName("Name can't be blank !");
-      } else {
         setEmptyPrice("Price can't be blank !");
+      } else if (response.data.result.name !== "" && response.data.result.price === null) {
+        setEmptyName("");
+        setEmptyPrice("Price can't be blank !");
+      } else if (response.data.result.name === "" && response.data.result.price !== null) {
+        setEmptyName("Name can't be blank !");
+        setEmptyPrice("");
       }
     }
   } catch (error) {
