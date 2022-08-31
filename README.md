@@ -2,14 +2,22 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
-
+1. First, clone the project into your local folder:
 ```bash
-npm run dev
-# or
-yarn dev
+git clone https://github.com/hanaw23/Binar-mock-tech-test-frontend.git
 ```
-if still don't have .next you should
+
+2. if the clone is successful you can change the directory to this repo:
+```bash
+cd binar-mock-tech-test-frontend
+```
+
+3. Pull the main branch for the updates:
+```bash
+git pull origin main
+```
+
+4. if the repo still don't have .next folder you should
 ```bash
 npm run build
 # or
@@ -23,6 +31,12 @@ yarn install
 ```
 so then the node modules package will be installed
 
+5. and run it:
+```bash
+npm run dev
+# or
+yarn dev
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
