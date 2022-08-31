@@ -3,8 +3,10 @@ import { createWrapper } from "next-redux-wrapper";
 
 import { loginReducer } from "./reducers/login";
 import { productsReducer } from "./reducers/products";
+import { registerReducer } from "./reducers/register";
 
 const reducer = combineReducers({
+  register: registerReducer,
   login: loginReducer,
   products: productsReducer,
 });
