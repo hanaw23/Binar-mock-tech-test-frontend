@@ -9,6 +9,20 @@ npm run dev
 # or
 yarn dev
 ```
+if still don't have .next you should
+```bash
+npm run build
+# or
+yarn build
+```
+and don't forget to 
+```bash
+npm install
+# or
+yarn install
+```
+so then the node modules package will be installed
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
