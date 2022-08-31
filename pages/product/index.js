@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { hasToken } from "../../utility/localStorage";
+import { fetchGetProducts } from "../../store/action/products";
 import { protectedPage } from "../../utility/protectedPage";
 
 import PageHeader from "../../components/headers/PageHeader";
@@ -13,24 +14,14 @@ export default function index() {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     protectedPage();
   }, []);
 
-  const showProductList = async () => {
-    hasToken();
-    try {
-      await axios.get(`/v1/products`).then((response) => {
-        setProductList(response.data.result);
-      });
-      setLoading(true);
-    } catch (error) {
-      error;
-    }
-  };
-
   useEffect(() => {
-    showProductList();
+    dispatch(fetchGetProducts(setProductList, setLoading));
   }, []);
 
   return (

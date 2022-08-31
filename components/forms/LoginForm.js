@@ -1,15 +1,14 @@
-import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
-import { setUserLocal } from "../../utility/localStorage";
+import { fetchLogin } from "../../store/action/login";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -19,19 +18,9 @@ export default function LoginForm() {
     setPassword(event.target.value);
   };
 
-  const handleSubmitLogin = async (event) => {
+  const handleSubmitLogin = (event) => {
     event.preventDefault();
-
-    try {
-      const reponse = await axios.post(`/auth/login`, {
-        email: email,
-        password: password,
-      });
-      setUserLocal(reponse.data.result.access_token);
-      router.push("/product");
-    } catch (error) {
-      setError(error);
-    }
+    dispatch(fetchLogin(email, password, setError));
   };
 
   return (
