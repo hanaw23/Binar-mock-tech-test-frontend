@@ -57,7 +57,7 @@ export const fetchPutProducts = (id, name, price, image, setLoading, setSuccess,
       Router.push("/product");
       setSuccess("Success Update Product");
       window.location.reload(true);
-      dispatch(postProducts(response.data.result));
+      dispatch(putProducts(response.data.result));
     } else {
       Router.push("/product");
       setError("Terdapat Error!");
