@@ -33,7 +33,7 @@ export default function EditProductForm(props) {
     setPrice(event.target.value);
   };
 
-  const submitEditProduct = (event) => {
+  const submitEditProduct = async (event) => {
     event.preventDefault();
     dispatch(fetchPutProducts(id, name, price, image, setLoading, setSuccess, setError, setEmptyName, setEmptyImage, setEmptyPrice));
   };

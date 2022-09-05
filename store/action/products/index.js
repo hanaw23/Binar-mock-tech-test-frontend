@@ -55,9 +55,9 @@ export const fetchPutProducts = (id, name, price, image, setLoading, setSuccess,
     setLoading(true);
 
     if (response.data.status === "OK" && response.data.errors === null && response.data.result.name !== "" && response.data.result.imageurl !== "" && response.data.result.price !== null) {
-      Router.push("/product");
       setSuccess("Success Update Product");
       window.location.reload(true);
+      Router.replace("/product");
       dispatch(putProducts(response.data.result));
     } else if (response.data.errors === null && response.data.result.name === "" && response.data.result.imageurl === "" && response.data.result.price === null) {
       setEmptyName("Name can't be blank !");
